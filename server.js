@@ -1,7 +1,13 @@
 const http = require("http");
 
 
-let PORT=5055
+let PORT=5055 ; 
+
+const losFabulososCadillacs = {
+  name: "Los Fabulosos Cadillacs",
+  genre: "Rock reggae en Español",
+  origin: "Argentina",
+}
 
 
 const server = http.createServer((req,res)=>{
@@ -10,7 +16,24 @@ if(req.url=="/"){
 res.writeHead(200, {"Content-Type":"text/plain"});
 res.end("hello android81");
 }
-
+if(req.url=="/data"){
+  if(!req.headers["x-auth-token"]){
+  res.writeHead(401, {"Content-Type":"text/plain"});
+  res.end("Unauthorized: Missing x-auth-token header");
+  return;
+  }
+  
+  if(req.headers["x-auth-token"] !== "my-secret-token"){
+  res.writeHead(401, {"Content-Type":"text/plain"});
+  res.end("Unauthorized: Invalid x-auth-token value");
+  return;
+  }
+res.writeHead(200, {"Content-Type":"application/json"});
+res.end(JSON.stringify({
+  message:"This is some JSON data" , 
+  data:losFabulososCadillacs
+}));
+}
 
 }).listen( PORT , ()=> {
 
