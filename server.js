@@ -6,9 +6,11 @@ let PORT=5055
 
 const server = http.createServer((req,res)=>{
 
+if(req.url=="/"){
+res.writeHead(200, {"Content-Type":"text/plain"});
+res.end("hello android81");
+}
 
- res.writeHead(200, {"Content-Type":"text/plain"});
- res.end("hello android81");
 
 }).listen( PORT , ()=> {
 
