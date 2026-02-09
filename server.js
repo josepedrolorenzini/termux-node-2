@@ -9,6 +9,8 @@ const losFabulososCadillacs = {
   origin: "Argentina",
 }
 
+const vagabundoSpiritual = "https://spiritualmojo.com/vagabond-spiritual-meaning/"
+
 
 const server = http.createServer((req,res)=>{
 
@@ -17,18 +19,21 @@ res.writeHead(200, {"Content-Type":"text/plain"});
 res.end("hello android81");
 }
 if(req.url=="/data"){
+  // Check for the presence of the x-auth-token header
   if(!req.headers["x-auth-token"]){
   res.writeHead(401, {"Content-Type":"text/plain"});
   res.end("Unauthorized: Missing x-auth-token header");
   return;
   }
-  
+  // Validate the value of the x-auth-token header (for example, check if it matches a predefined token)
   if(req.headers["x-auth-token"] !== "my-secret-token"){
   res.writeHead(401, {"Content-Type":"text/plain"});
   res.end("Unauthorized: Invalid x-auth-token value");
   return;
   }
+  // If the token is valid, proceed to send the JSON response
 res.writeHead(200, {"Content-Type":"application/json"});
+
 res.end(JSON.stringify({
   message:"This is some JSON data" , 
   data:losFabulososCadillacs
